@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
            <div class="nav-playlist">
             <h5>Crie sua Primeira Playlist</h5>
             <p>
-                é facil,vamos te ajudar
+                é fácil, vamos te ajudar
             </p>
             <button>Criar Playlist</button>
            </div>
@@ -43,23 +43,40 @@
            </button>
         </nav>
         <main>
-<header class="search-bar">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input  placeholder="O que você quer ouvir?">
-</header>
-<section class="content">
-    <h2>Artistas Populares</h2>
-    <div class="artist-grid">
+            <header class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input placeholder="O que você quer ouvir?">
+            </header>
+            <section class="content">
+                <h2>Artistas Populares</h2>
+                <div class="artist-grid">
 
-    </div>
+                </div>
 
-    <h2>Álbuns Populares</h2>
-    <div class="albums-grid">
+                <h2>Álbuns Populares</h2>
+                <div class="albums-grid">
 
-    </div>
-</section>
+                </div>
+            </section>
         </main>
     </div>
+
+    <!-- Player: começa escondido e aparece ao clicar em um álbum -->
+    <div class="player" id="player">
+        <img id="player-capa" src="" alt="Capa do álbum">
+        <div class="player-info">
+            <h4 id="player-album"></h4>
+            <ul id="player-lista"></ul>
+        </div>
+        <div class="player-controles">
+            <p id="player-tocando">Escolha uma música</p>
+            <audio id="player-audio" controls></audio>
+        </div>
+        <button id="player-fechar" aria-label="Fechar player">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <script src="./script.js"></script>
 </body>
-<script src="./script.js"></script>
 </html>
