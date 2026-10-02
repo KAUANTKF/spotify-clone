@@ -48,6 +48,13 @@
                 <input placeholder="O que você quer ouvir?">
             </header>
             <section class="content">
+                <div>
+                    <h3><i class="fa-solid fa-tower-broadcast"></i> Música tocando agora</h3>
+                    <p id="global-nome">Nenhuma música selecionada</p>
+                    <p id="global-artist"></p>
+                    <p id="global-album"></p>
+                    <span id="global-status">Aguardando Reprodução</span>
+                </div>
                 <h2>Artistas Populares</h2>
                 <div class="artist-grid">
 
@@ -76,6 +83,9 @@
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-database-compat.js"></script>
 
     <script src="./script.js"></script>
 </body>

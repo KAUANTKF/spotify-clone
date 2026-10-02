@@ -1,3 +1,20 @@
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDn4b4mjfhWTHZuG7BNdw-soPV7hkCs0o",
+    authDomain: "projeto-spotify-77440.firebaseapp.com",
+    databaseURL: "https://projeto-spotify-77440-default-rtdb.firebaseio.com",
+    projectId: "projeto-spotify-77440",
+    storageBucket: "projeto-spotify-77440.firebasestorage.app",
+    messagingSenderId: "329296770436",
+    appId: "1:329296770436:web:3aa82c58488242456559d1",
+    measurementId: "G-4W712CWT9R"
+};
+
+
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const musicaAtualRef = database.ref("musicaAtual");
+
 document.addEventListener('DOMContentLoaded', () => {
     const artistsData = [
         {
@@ -125,6 +142,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const playerAudio = document.getElementById('player-audio');
     const playerFechar = document.getElementById('player-fechar');
 
+    // Elementos que mostram a música global (atualizados pelo Firebase)
+    const globalNome = document.getElementById('global-nome');
+    const globalArtista = document.getElementById('global-artista');
+    const globalAlbum = document.getElementById('global-album');
+    const globalStatus = document.getElementById('global-status');
+
+    // Escuta mudanças no banco e atualiza a tela em tempo real
+    musicaAtualRef.on('value', (snapshot) => {
+        const dados = snapshot.val();
+
+        if (!dados) {
+            globalNome.textContent = 'Nenhuma música selecionada';
+            globalArtista.textContent = '';
+            globalAlbum.textContent = '';
+            globalStatus.textContent = 'Aguardando reprodução...';
+            return;
+        }
+
+        globalNome.textContent = dados.nome || 'Música desconhecida';
+        globalArtista.textContent = 'Artista: ' + (dados.artista || 'Desconhecido');
+        globalAlbum.textContent = 'Álbum: ' + (dados.album || 'Desconhecido');
+        globalStatus.textContent = dados.tocando ? 'Em reprodução' : 'Pausada ou finalizada';
+    }, (erro) => {
+        console.error('Erro ao ler o Realtime Database:', erro);
+        globalStatus.textContent = 'Não foi possível carregar os dados do Firebase.';
+    });
+
     // Guarda o álbum aberto e qual música está tocando
     let albumAtual = null;
     let indiceAtual = -1;
@@ -137,6 +181,17 @@ document.addEventListener('DOMContentLoaded', () => {
         playerAudio.src = musica.arquivo;
         playerAudio.play();
         playerTocando.textContent = musica.nome;
+
+// Salva no Firebase qual música foi selecionada para tocar
+        musicaAtualRef.set({
+            nome: musica.nome,
+            artista: albumAtual.artist,
+            album: albumAtual.name,
+            tocando: true,
+            atualizadoEm: Date.now()
+        }).catch((erro) => {
+            console.error('Erro ao salvar a música no Firebase:', erro);
+        });
 
         // Destaca a música que está tocando na lista
         playerLista.querySelectorAll('li').forEach((li, i) => {
@@ -165,6 +220,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         player.classList.add('ativo');
     }
+
+    // Atualiza o Firebase quando o usuário pausa a música
+    playerAudio.addEventListener('pause', () => {
+        if (albumAtual && indiceAtual >= 0 && !playerAudio.ended) {
+            musicaAtualRef.update({
+                tocando: false,
+                atualizadoEm: Date.now()
+            }).catch((erro) => {
+                console.error('Erro ao atualizar o status no Firebase:', erro);
+            });
+        }
+    });
+
+    // Atualiza o Firebase quando a reprodução é retomada
+    playerAudio.addEventListener('play', () => {
+        if (albumAtual && indiceAtual >= 0) {
+            musicaAtualRef.update({
+                tocando: true,
+                atualizadoEm: Date.now()
+            }).catch((erro) => {
+                console.error('Erro ao atualizar o status no Firebase:', erro);
+            });
+        }
+    });
 
     // Quando a música termina, toca a próxima do álbum
     playerAudio.addEventListener('ended', () => {

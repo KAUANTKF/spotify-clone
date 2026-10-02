@@ -220,3 +220,36 @@ img{
 #player-fechar:hover{
     color: #fff;
 }
+
+
+/* ---------- MÚSICA GLOBAL / FIREBASE ---------- */
+.musica-global {
+    background-color: #181818;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0 30px;
+    border-left: 4px solid #1db954;
+}
+
+.musica-global h3 {
+    color: #1db954;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.musica-global p {
+    color: #fff;
+    margin: 5px 0;
+}
+
+#global-nome {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#global-status {
+    display: inline-block;
+    margin-top: 8px;
+    color: #1db954;
+    font-size: 12px;
+}
