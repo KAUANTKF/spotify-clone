@@ -88,6 +88,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 { nome: 'Dancing Queen', arquivo: './audio/dancingqueen.mp3' }
                
             ]
+        },
+        {
+            name: 'Voulez-Voz',
+            artist: 'ABBA',
+            image: './img/Voulez-Vous.jpeg',
+            musicas: [
+                { nome: 'AngelEyes', arquivo: './audio/angeleyes.mp3' },
+                 { nome: 'Gimme! Gimme! Gimme! (A Man After Midnight)', arquivo: './audio/gimme.mp3' }
+               
+            ]
+        },
+        {
+            name: 'Slipknot(Vol-3)',
+            artist: 'Slipknot',
+            image: './img/slipknot(vol3).jpeg',
+            musicas: [
+                { nome: 'Duality', arquivo: './audio/duality.mp3' },
+                { nome: 'Before i Forget', arquivo: './audio/before.mp3' },
+                { nome: 'Vermillion pt 2', arquivo: './audio/vermillionpt2.mp3' },
+                
+            ]
         }
     ];
 
